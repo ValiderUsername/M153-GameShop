@@ -7,6 +7,7 @@ go
 drop function if exists ComparePrices
 drop function if exists SplitStrings
 drop procedure if exists InsertNewGame
+drop procedure if exists DeleteUnusedData
 go
 
 --Function call: SELECT * FROM ComparePrices('Name of the Game');
@@ -143,29 +144,13 @@ create procedure DeleteUnusedData
 as
 begin
 	delete from Genres
-	where GenreID not in (select GenreID from Game_Genre)
+	where GenreID not in (
+		select GenreID from Game_Genre
+	)
 
 	delete from Shops
-	where ShopID not in (select ShopID from Game_Shop);
-
-	with GenresDuplicate as (
-		select Name from Genres
-		group by Name
-		having COUNT(*) > 1
-	)
-	delete from Genres
-	where Name in (
-		select Name from GenresDuplicate
-	);
-
-	with ShopsDuplicate as (
-		select Name from Shops
-		group by Name
-		having COUNT(*) > 1
-	)
-	delete from Shops
-	where Name in (
-		select Name from ShopsDuplicate
+	where ShopID not in (
+		select ShopID from Game_Shop
 	)
 
 end;
