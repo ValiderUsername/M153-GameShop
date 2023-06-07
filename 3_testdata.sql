@@ -417,3 +417,9 @@ Storage: 25 GB available space',
     @publisher = 'Activision',
     @genresList = 'Action-adventure',
     @shopsList = 'Steam, PlayStation Store, Xbox Store';
+
+go
+
+update Game_Shop
+set Price = 70
+where gameID in (select gameID from Games where Name = 'Elden Ring') and ShopID in (select ShopID from Shops where Name = 'Steam')

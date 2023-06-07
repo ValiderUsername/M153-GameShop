@@ -19,3 +19,7 @@ where Name = 'Testgenre'
 
 select * from Shops
 where Name = 'Testshop'
+
+go
+
+select * from ComparePrices('Elden Ring')
